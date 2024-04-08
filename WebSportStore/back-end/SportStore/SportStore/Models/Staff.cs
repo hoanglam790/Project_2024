@@ -16,7 +16,7 @@ namespace SportStore.Models
         public string? Email { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public int? PositionID { get; set; }
+        public int? StaffPositionID { get; set; }
         public virtual StaffPosition? StaffPosition { get; set; }
         public virtual ICollection<News> News { get; set; } = new List<News>();
         public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();

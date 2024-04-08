@@ -47,7 +47,7 @@ namespace SportStore.Repository.CategoryRepo
             {
                 updateCate.CategoryName = categoryDTO.CategoryName;
                 updateCate.UpdateDate = DateTime.Now;
-                _dataContext.Update(updateCate);
+                _dataContext.Categories.Update(updateCate);
                 await _dataContext.SaveChangesAsync();
             }
         }
@@ -57,7 +57,7 @@ namespace SportStore.Repository.CategoryRepo
             var deleteCate = await _dataContext.Categories.FirstOrDefaultAsync(n => n.CategoryID == cateID);
             if (deleteCate != null)
             {
-                _dataContext.Remove(deleteCate);
+                _dataContext.Categories.Remove(deleteCate);
                 await _dataContext.SaveChangesAsync();
             }
         }       

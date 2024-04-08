@@ -5,6 +5,7 @@ using SportStore.Helper;
 using SportStore.Repository.CategoryRepo;
 using SportStore.Repository.ProductRepo;
 using SportStore.Repository.StaffPositionRepo;
+using SportStore.Repository.StaffRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddAutoMapper(typeof(AppHelper).Assembly);
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 
 var app = builder.Build();
 

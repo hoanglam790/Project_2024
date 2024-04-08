@@ -281,10 +281,7 @@ namespace SportStore.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int?>("PositionID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StaffPositionPositionID")
+                    b.Property<int?>("StaffPositionID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -292,18 +289,18 @@ namespace SportStore.Migrations
 
                     b.HasKey("StaffID");
 
-                    b.HasIndex("StaffPositionPositionID");
+                    b.HasIndex("StaffPositionID");
 
                     b.ToTable("Staffs");
                 });
 
             modelBuilder.Entity("SportStore.Models.StaffPosition", b =>
                 {
-                    b.Property<int>("PositionID")
+                    b.Property<int>("StaffPositionID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PositionID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffPositionID"));
 
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
@@ -314,7 +311,7 @@ namespace SportStore.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("PositionID");
+                    b.HasKey("StaffPositionID");
 
                     b.ToTable("StaffPositions");
                 });
@@ -380,7 +377,7 @@ namespace SportStore.Migrations
                 {
                     b.HasOne("SportStore.Models.StaffPosition", "StaffPosition")
                         .WithMany("Staffs")
-                        .HasForeignKey("StaffPositionPositionID");
+                        .HasForeignKey("StaffPositionID");
 
                     b.Navigation("StaffPosition");
                 });

@@ -126,7 +126,7 @@ namespace SportStore.Repository.ProductRepo
             var deleteProduct = await _dataContext.Products.FirstOrDefaultAsync(p => p.ProductID == productID);
             if (deleteProduct != null)
             {
-                _dataContext.Remove(deleteProduct);
+                _dataContext.Products.Remove(deleteProduct);
                 await _dataContext.SaveChangesAsync();
             }
         }

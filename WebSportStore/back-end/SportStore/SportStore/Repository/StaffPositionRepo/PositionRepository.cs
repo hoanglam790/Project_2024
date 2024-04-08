@@ -40,21 +40,21 @@ namespace SportStore.Repository.StaffPositionRepo
 
         public async Task UpdatePosition(CreatePosition positionDTO, int id)
         {
-            var updatePosition = await _dataContext.StaffPositions.FirstOrDefaultAsync(p => p.PositionID == id);
+            var updatePosition = await _dataContext.StaffPositions.FirstOrDefaultAsync(p => p.StaffPositionID == id);
             if (updatePosition != null)
             {
                 updatePosition.PositionName = positionDTO.PositionName;
                 updatePosition.UpdateDate = DateTime.Now;
-                _dataContext.Update(updatePosition);
+                _dataContext.StaffPositions.Update(updatePosition);
                 await _dataContext.SaveChangesAsync();
             }
         }
         public async Task DeletePosition(int id)
         {
-            var deletePosition = await _dataContext.StaffPositions.FirstOrDefaultAsync(p => p.PositionID == id);
+            var deletePosition = await _dataContext.StaffPositions.FirstOrDefaultAsync(p => p.StaffPositionID == id);
             if(deletePosition != null)
             {
-                _dataContext.Remove(deletePosition);
+                _dataContext.StaffPositions.Remove(deletePosition);
                 await _dataContext.SaveChangesAsync();
             }
         }
