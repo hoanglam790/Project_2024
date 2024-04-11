@@ -3,7 +3,7 @@ import Logo from '../Images/logo.png'
 import { Link } from 'react-router-dom'
 import Image1 from '../Images/image2.png'
 
-const index = () => {
+const Header = () => {
   return (
     <><div className='header_top'>
         <div className='container'>
@@ -72,4 +72,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Header

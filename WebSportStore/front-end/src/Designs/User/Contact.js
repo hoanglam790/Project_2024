@@ -2,21 +2,24 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Header from '../../Components/header_1'
 import Footer from '../../Components/footer'
-import getAPI from '../../Api/ApiClient';
 
 const Contact = () => {
   const [cate, setCate] = useState([]);
 
   useEffect(() => {
-    async function fetchData(id) {
-      const req = await axios.get('http://localhost:5050/api/Category');
-      console.log(req.data);
-      setCate(req.data.data);
-      return req;
-    }
-    fetchData();
+    getData();
   }, []);
 
+  // Get data API
+  const getData = () => {
+    axios.get('http://localhost:5050/api/Category')
+    .then((request) => {
+      setCate(request.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
   return (
     <>
     <Header />

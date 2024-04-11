@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../Images/logo.png'
 import { Link } from 'react-router-dom'
 
-const header_1 = () => {
+const Header_1 = () => {
   return (
     <><div className='header_top'>
         <div className='container'>
@@ -80,4 +80,4 @@ const header_1 = () => {
     </div></>
   )
 }
-export default header_1
+export default Header_1
