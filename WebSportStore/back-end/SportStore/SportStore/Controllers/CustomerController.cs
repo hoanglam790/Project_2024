@@ -1,33 +1,34 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SportStore.DTO.Customer;
 using SportStore.DTO.Staff;
 using SportStore.Helper;
-using SportStore.Repository.StaffRepo;
-using System.ComponentModel.DataAnnotations;
+using SportStore.Repository.CustomerRepo;
 
 namespace SportStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StaffController : ControllerBase
+    public class CustomerController : ControllerBase
     {
-        private readonly IStaffRepository _staffRepository;
-        public StaffController(IStaffRepository staffRepository)
+        private readonly ICustomerRepository _customerRepository;
+
+        public CustomerController(ICustomerRepository customerRepository)
         {
-            _staffRepository = staffRepository;
+            _customerRepository = customerRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllStaff()
+        public async Task<IActionResult> GetAllCustomer()
         {
             try
             {
-                var getAllStaff = await _staffRepository.GetAllStaff();
+                var getAllCustomer = await _customerRepository.GetAllCustomer();
                 return Ok(new ApiRespond
                 {
                     Success = true,
-                    Message = "Lấy dữ liệu nhân viên thành công",
-                    Data = getAllStaff
+                    Message = "Lấy dữ liệu khách hàng thành công",
+                    Data = getAllCustomer
                 });
             }
             catch (Exception ex)
@@ -43,24 +44,24 @@ namespace SportStore.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetStaffByID(int id)
+        public async Task<IActionResult> GetCustomerByID(int id)
         {
             try
             {
-                var getStaffByID = await _staffRepository.GetStaffByID(id);
-                if (getStaffByID != null)
+                var getCustomerByID = await _customerRepository.GetCustomerByID(id);
+                if (getCustomerByID != null)
                 {
                     return Ok(new ApiRespond
                     {
                         Success = true,
-                        Message = "Lấy dữ liệu nhân viên thành công",
-                        Data = getStaffByID
+                        Message = "Lấy dữ liệu khách hàng thành công",
+                        Data = getCustomerByID
                     });
                 }
                 return NotFound(new ApiRespond
                 {
-                    Success = false,
-                    Message = "Không tìm thấy nhân viên số " + id,
+                    Success = true,
+                    Message = "Không tìm thấy khách hàng số " + id,
                     Data = null
                 });
             }
@@ -76,15 +77,15 @@ namespace SportStore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewStaff([FromForm] CreateStaff staffDTO)
+        public async Task<IActionResult> AddNewCustomer([FromForm] CreateCustomer customerDTO)
         {
             try
             {
-                var addStaff = await _staffRepository.AddStaff(staffDTO);
+                var addCustomer = await _customerRepository.AddCustomer(customerDTO);
                 return Ok(new ApiRespond
                 {
                     Success = true,
-                    Message = "Thêm mới nhân viên thành công"
+                    Message = "Thêm mới khách hàng thành công"
                 });
             }
             catch (Exception ex)
@@ -100,24 +101,24 @@ namespace SportStore.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateStaff([FromForm] CreateStaff staffDTO, int id)
+        public async Task<IActionResult> UpdateCustomer([FromForm] CreateCustomer customerDTO, int id)
         {
             try
             {
-                var updateStaff = await _staffRepository.GetStaffByID(id);
-                if (updateStaff != null)
+                var updateCustomer = await _customerRepository.GetCustomerByID(id);
+                if (updateCustomer != null)
                 {
-                    await _staffRepository.UpdateStaff(staffDTO, id);
+                    await _customerRepository.UpdateCustomer(customerDTO, id);
                     return Ok(new ApiRespond
                     {
                         Success = true,
-                        Message = "Cập nhật nhân viên thành công"
+                        Message = "Cập nhật khách hàng thành công"
                     });
                 }
                 return NotFound(new ApiRespond
                 {
                     Success = false,
-                    Message = "Cập nhật thất bại. Không tìm thấy nhân viên",
+                    Message = "Cập nhật thất bại. Không tìm thấy khách hàng",
                     Data = null
                 });
             }
@@ -134,24 +135,24 @@ namespace SportStore.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteStaff(int id)
+        public async Task<IActionResult> DeleteCustomer(int id)
         {
             try
             {
-                var deleteStaff = await _staffRepository.GetStaffByID(id);
-                if (deleteStaff != null)
+                var deleteCustomer = await _customerRepository.GetCustomerByID(id);
+                if (deleteCustomer != null)
                 {
-                    await _staffRepository.DeleteStaff(id);
+                    await _customerRepository.DeleteCustomer(id);
                     return Ok(new ApiRespond
                     {
                         Success = true,
-                        Message = "Xóa nhân viên thành công"
+                        Message = "Xóa khách hàng thành công"
                     });
                 }
                 return NotFound(new ApiRespond
                 {
                     Success = false,
-                    Message = "Xóa thất bại. Không tìm thấy nhân viên",
+                    Message = "Xóa thất bại. Không tìm thấy khách hàng",
                     Data = null
                 });
             }

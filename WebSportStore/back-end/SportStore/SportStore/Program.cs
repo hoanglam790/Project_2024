@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SportStore.Data;
 using SportStore.Helper;
 using SportStore.Repository.CategoryRepo;
+using SportStore.Repository.CustomerRepo;
+using SportStore.Repository.NewsRepo;
 using SportStore.Repository.ProductRepo;
 using SportStore.Repository.StaffPositionRepo;
 using SportStore.Repository.StaffRepo;
@@ -29,6 +31,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
