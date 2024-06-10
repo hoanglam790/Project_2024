@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../Components/header_1'
-import Footer from '../../Components/footer'
+import Header from '../../Components/Pages/header_1'
+import Footer from '../../Components/Pages/footer'
 import Image from '../../Images/ball.png' 
 
 const Cart = () => {

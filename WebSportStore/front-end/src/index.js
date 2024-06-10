@@ -7,6 +7,7 @@ import Contact from './Designs/User/Contact'
 import Cart from './Designs/User/Cart'
 import Login from './Designs/User/Login'
 import A from './Designs/User/a'
+import Product from './Designs/User/Product';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Login />} />
         <Route path='/a' element={<A />} />
+        <Route path='/product' element={<Product />} />
       </Routes>     
     </Router>      
   </React.StrictMode>

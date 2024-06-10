@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../Components/header'
-import Footer from '../../Components/footer'
+import Header from '../../Components/Pages/header'
+import Footer from '../../Components/Pages/footer'
 import Ball from '../../Images/ball.png'
 
 const Home = () => {

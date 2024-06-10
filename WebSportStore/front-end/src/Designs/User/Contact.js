@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import Header from '../../Components/header_1'
-import Footer from '../../Components/footer'
+import Header from '../../Components/Pages/header_1'
+import Footer from '../../Components/Pages/footer'
+import HeroSection from '../../Components/Hero_Section/hero_section_contact'
 
 const Contact = () => {
   const [cate, setCate] = useState([]);
@@ -23,6 +24,7 @@ const Contact = () => {
   return (
     <>
     <Header />
+    <HeroSection />
       <section className="relative bg-white py-16 px-4">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4207676358483!2d106.78253487480617!3d10.855566889298087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175276e7ea103df%3A0xb6cf10bb7d719327!2zSFVURUNIIC0gxJDhuqFpIGjhu41jIEPDtG5nIG5naOG7hyBUUC5IQ00gKFRodSBEdWMgQ2FtcHVzKQ!5e0!3m2!1svi!2s!4v1708516740647!5m2!1svi!2s" width="100%" height="600" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
         <div className="container mx-auto">       
