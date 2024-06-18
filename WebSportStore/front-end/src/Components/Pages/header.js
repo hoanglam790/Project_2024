@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Logo from '../../Images/logo.png'
 import Image1 from '../../Images/image2.png'
 
-const Header = () => {
+const Header = () => { 
+  const [cate, setCate] = useState([])
+  const [product, setProduct] = useState([])
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuTimeout = useRef(null)
 
@@ -11,6 +15,10 @@ const Header = () => {
     return () => {
       clearTimeout(menuTimeout.current);
     };
+  }, []);
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const handleMenuOpen = () => {
@@ -24,12 +32,32 @@ const Header = () => {
     }, 200);
   }
 
-  const handleItemClick = () => {
+  const handleItemClick = async (id) => {
     clearTimeout(menuTimeout.current);
+    try{
+      await axios.get(`http://localhost:5050/api/Product/${id}`)
+      .then((request) => {
+        setProduct(request.data.data)
+      })
+    }
+    catch (error) {
+      console.error('Error fetching product:', error)
+    }
   }
 
   const handleListMouseOver = () => {
     clearTimeout(menuTimeout.current);
+  }
+
+  // Get data API
+  const getData = () => {
+    axios.get('http://localhost:5050/api/Category')
+    .then((request) => {
+      setCate(request.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   return (
@@ -52,26 +80,30 @@ const Header = () => {
               <img className='object-contain h-20 w-40' src={Logo} alt='logo_shop' />
             </a>
             <div className='hidden lg:block'>
+              
               <ul className='mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 text-3xl'>
                 <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
                   <Link to='/' className='flex items-center gap-1 p-1 font-bold hover:text-blue-700'>Trang chủ</Link>
                 </li>
-                <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
-                  <a className='flex items-center gap-1 p-1 font-bold hover:text-blue-700' 
+                                 
+                <li className='block font-sans text-sm font-light leading-normal text-inherit capitalize'>
+                  <a className='flex items-center gap-1 p-1 font-bold hover:text-blue-700'
                     onMouseOver={handleMenuOpen}
                     onMouseOut={handleMenuClose}
                   >
                     Danh mục sản phẩm
                   </a>
-                  {isMenuOpen && (
-                    <div className="absolute bg-gray-800 shadow-lg rounded-md mt-3" onMouseOver={handleListMouseOver}>
-                      <a href="https://google.com" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 1</a>
-                      <a href="#" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 2</a>
-                      <a href="#" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 3</a>
-                      {/* Add more product links as needed */}
-                    </div>
-                  )}
-                </li>
+                  <ul>
+                    {isMenuOpen && cate.map(c => {
+                      return(
+                        <li className="bg-gray-800 shadow-lg rounded-md mt-3 mb-2" onMouseOver={handleListMouseOver}>
+                          <a href='/category' className="block text-white px-4 py-2 hover:bg-gray-700">{c.categoryName}</a>                                         
+                        </li>
+                      )                          
+                    })}
+                  </ul>                                                                        
+                </li>                 
+                
                 <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
                   <Link to='/product' className='flex items-center gap-1 p-1 font-bold hover:text-blue-700'>Sản phẩm</Link>
                 </li>

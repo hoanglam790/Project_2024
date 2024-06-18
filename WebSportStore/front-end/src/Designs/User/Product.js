@@ -1,38 +1,66 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Header from '../../Components/Pages/header_1'
 import Footer from '../../Components/Pages/footer'
 import HeroSection from '../../Components/Hero_Section/hero_section_product'
+import axios from 'axios'
 
 const Product = () => {
+    const [product, setProduct] = useState([])
+    const formatMoney = (amount) => {
+        return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount)
+    }
+
+    useEffect(() => {
+        getData();
+      }, []);
+
+    // Get data API
+    const getData = async () => {
+        await axios.get(`http://localhost:5050/api/Product`)
+        .then((request) => {
+            setProduct(request.data.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
   return (
     <>
     <Header />
     <HeroSection />
-    <div className='bg-white'>
-        <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8'>
-            <h2 className='text-2xl font-bold tracking-tight text-gray-900'>Sản phẩm</h2>
-
-            <div className='mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
-                <div className='group relative'>
-                    <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80'>
-                        <img src='https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg' alt='Front of men&#039;s Basic Tee in black.' className='h-full w-full object-cover object-center lg:h-full lg:w-full' />
-                    </div>
-                    <div className='mt-4 flex justify-between'>
-                        <div>
-                            <h3 class="text-sm text-gray-700">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Basic Tee
+        <section id='Products' className='w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5'>
+            {product.map(p => {
+                return (
+                <>
+                    <div className='w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl'>
+                        <a href={`/product/${p.productID}`}>
+                            <img src={process.env.PUBLIC_URL + `/Images/Product/${p.productImage}`} height={50}
+                            alt='Product' className='h-80 w-72 object-cover rounded-t-xl'
+                            />
+                            <div className='px-4 py-3 w-72'>                       
+                                <p className='text-lg font-bold text-black truncate block capitalize'>{p.productName}</p>
+                                <span className='text-gray-400 mr-3 uppercase text-xs'>{p.categoryName}</span>
+                                <div className='flex items-center'>
+                                    <p className='text-lg font-semibold text-black cursor-auto my-3'>{formatMoney(p.productPrice)}</p>
+                                    <del>
+                                        <p className='text-sm text-gray-600 cursor-auto ml-2'>{formatMoney(1000000)}</p>
+                                    </del>
+                                </div>
+                                <a href='https://google.com' className='flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+                                    <svg xmlns='http://www.w3.org/2000/svg' className='mr-2 h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth='2'>
+                                    <path strokeLinecap='round' strokeLinejoin='round' 
+                                        d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z' />
+                                    </svg>
+                                    Thêm vào giỏ hàng
                                 </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">Black</p>
-                        </div>
-                        <p class="mt-1 text-sm text-gray-500">150.000đ</p>
+                            </div>
+                        </a>          
                     </div>
-                </div>              
-            </div>
-        </div>
-    </div>
+                </>
+                )
+            })}                        
+        </section>
     <Footer />          
     </>
   )

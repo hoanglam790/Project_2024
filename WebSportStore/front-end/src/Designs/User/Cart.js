@@ -1,12 +1,14 @@
 import React from 'react'
 import Header from '../../Components/Pages/header_1'
 import Footer from '../../Components/Pages/footer'
-import Image from '../../Images/ball.png' 
+import Image from '../../Images/ball.png'
+import HeroSection from '../../Components/Hero_Section/hero_section_product'
 
 const Cart = () => {
   return (
     <>
     <Header />
+    <HeroSection />
         <div className='bg-gray-100 h-screen py-8'>
             <div className='container mx-auto px-4'>
                 <h1 className='text-2xl font-semibold mb-4'>Giỏ hàng</h1>

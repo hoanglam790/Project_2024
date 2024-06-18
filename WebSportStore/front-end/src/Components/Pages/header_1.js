@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios'
 import Logo from '../../Images/logo.png'
 import { Link } from 'react-router-dom'
 
 const Header_1 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [cate, setCate] = useState([])
   const menuTimeout = useRef(null)
 
   useEffect(() => {
     return () => {
       clearTimeout(menuTimeout.current);
     };
+  }, []);
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const handleMenuOpen = () => {
@@ -29,6 +35,17 @@ const Header_1 = () => {
 
   const handleListMouseOver = () => {
     clearTimeout(menuTimeout.current);
+  }
+
+  // Get data API
+  const getData = () => {
+    axios.get('http://localhost:5050/api/Category')
+    .then((request) => {
+      setCate(request.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   return (
@@ -55,6 +72,7 @@ const Header_1 = () => {
                 <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
                   <Link to='/' className='flex items-center gap-1 p-1 font-bold hover:text-blue-700'>Trang chủ</Link>
                 </li>
+                    
                 <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
                   <a className='flex items-center gap-1 p-1 font-bold hover:text-blue-700' 
                     onMouseOver={handleMenuOpen}
@@ -62,15 +80,19 @@ const Header_1 = () => {
                   >
                     Danh mục sản phẩm
                   </a>
-                  {isMenuOpen && (
-                    <div className="absolute bg-gray-800 shadow-lg rounded-md mt-3" onMouseOver={handleListMouseOver}>
-                      <a href="https://google.com" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 1</a>
-                      <a href="#" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 2</a>
-                      <a href="#" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>Danh mục 3</a>
-                      {/* Add more product links as needed */}
-                    </div>
-                  )}
+                  {cate.map(c => {
+                    return (
+                      <>
+                      {isMenuOpen && (
+                        <div className="bg-gray-800 shadow-lg rounded-md mt-3 mx-auto" onMouseOver={handleListMouseOver}>
+                          <a href="#" className="block text-white px-4 py-2 hover:bg-gray-700" onClick={handleItemClick}>{c.categoryName}</a>
+                        </div>
+                      )}
+                      </>                            
+                    )
+                  })}                       
                 </li>
+                                                 
                 <li className='block antialiased font-sans text-sm font-light leading-normal text-inherit capitalize'>
                 <Link to='/product' className='flex items-center gap-1 p-1 font-bold hover:text-blue-700'>Sản phẩm</Link>
                 </li>
